@@ -46,7 +46,6 @@ public class QuoteGenerator {
 				.map(quote -> {
 					quote.setInstant(Instant.now()); return quote;
 				})
-				.share()
 				.log("io.spring.workshop");
 	}
 

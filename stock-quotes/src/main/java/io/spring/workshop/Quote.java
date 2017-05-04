@@ -14,6 +14,9 @@ public class Quote {
 
 	private Instant instant;
 
+	public Quote() {
+	}
+
 	public Quote(String ticker, BigDecimal price) {
 		this.ticker = ticker;
 		this.price = price;
