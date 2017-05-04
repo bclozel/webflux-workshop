@@ -1,0 +1,9 @@
+= Spring WebFlux Workshop
+
+This repository hosts a complete workshop on Spring Boot + Spring WebFlux.
+You can follow the script
+https://bclozel.github.io/webflux-workshop/[follow the script]
+(the source document is in the "docs" folder) to create your first
+WebFlux applications!
+Each step of this workshop has its companion commit in the git history with a detailed commit message.
+
