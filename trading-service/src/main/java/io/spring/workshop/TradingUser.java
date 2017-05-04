@@ -16,6 +16,12 @@ public class TradingUser {
 	public TradingUser() {
 	}
 
+	public TradingUser(String id, String userName, String fullName) {
+		this.id = id;
+		this.userName = userName;
+		this.fullName = fullName;
+	}
+
 	public TradingUser(String userName, String fullName) {
 		this.userName = userName;
 		this.fullName = fullName;
@@ -43,5 +49,23 @@ public class TradingUser {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		TradingUser that = (TradingUser) o;
+
+		if (!id.equals(that.id)) return false;
+		return userName.equals(that.userName);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id.hashCode();
+		result = 31 * result + userName.hashCode();
+		return result;
 	}
 }
