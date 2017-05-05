@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.tradingservice;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

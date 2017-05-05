@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.stockquotes;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -46,7 +46,7 @@ public class QuoteGenerator {
 				.map(quote -> {
 					quote.setInstant(Instant.now()); return quote;
 				})
-				.log("io.spring.workshop");
+				.log("io.spring.workshop.stockquotes");
 	}
 
 	private Quote updateQuote(Quote quote) {

@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.stockquotes;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

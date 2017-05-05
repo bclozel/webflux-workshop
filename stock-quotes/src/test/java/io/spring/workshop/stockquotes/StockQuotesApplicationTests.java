@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.stockquotes;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

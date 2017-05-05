@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.tradingservice;
 
 import java.time.Duration;
 import java.util.Arrays;

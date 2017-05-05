@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.tradingservice;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

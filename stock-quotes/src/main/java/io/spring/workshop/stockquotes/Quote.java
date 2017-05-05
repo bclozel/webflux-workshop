@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.stockquotes;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

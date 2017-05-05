@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.tradingservice;
 
 import reactor.core.publisher.Flux;
 
@@ -28,6 +28,6 @@ public class QuotesController {
 				.retrieve()
 				.bodyToFlux(Quote.class)
 				.share()
-				.log("io.spring.workshop");
+				.log("io.spring.workshop.trading");
 	}
 }

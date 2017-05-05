@@ -1,4 +1,4 @@
-package io.spring.workshop;
+package io.spring.workshop.tradingservice;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
