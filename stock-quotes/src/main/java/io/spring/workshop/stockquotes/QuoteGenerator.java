@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class QuoteGenerator {
 
-	private MathContext mathContext = new MathContext(2);
+	private final MathContext mathContext = new MathContext(2);
 
-	private Random random = new Random();
+	private final Random random = new Random();
 
-	private List<Quote> prices = new ArrayList();
+	private final List<Quote> prices = new ArrayList<>();
 
 	public QuoteGenerator() {
 		this.prices.add(new Quote("CTXS", 82.26));
@@ -38,13 +38,14 @@ public class QuoteGenerator {
 
 		return Flux.generate(() -> 0,
 				(BiFunction<Integer, SynchronousSink<Quote>, Integer>) (index, sink) -> {
-					Quote updatedQuote = updateQuote(prices.get(index));
+					Quote updatedQuote = updateQuote(this.prices.get(index));
 					sink.next(updatedQuote);
-					return ++index % prices.size();
+					return ++index % this.prices.size();
 				})
 				.zipWith(Flux.interval(period)).map(t -> t.getT1())
 				.map(quote -> {
-					quote.setInstant(Instant.now()); return quote;
+					quote.setInstant(Instant.now());
+					return quote;
 				})
 				.log("io.spring.workshop.stockquotes");
 	}
