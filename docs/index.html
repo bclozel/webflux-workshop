@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.6.2">
 <meta name="author" content="Brian Clozel, Violeta Georgieva - Pivotal">
 <title>Spring WebFlux Workshop</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -18,7 +18,6 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -53,7 +52,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -65,7 +64,6 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -92,13 +90,12 @@ strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
 code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
 ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
-ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
 ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
 ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
-ul.no-bullet{list-style:none}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -120,18 +117,25 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
-body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
-.menuseq,.menu{color:rgba(0,0,0,.8)}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
 b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
 b.button:before{content:"[";padding:0 3px 0 2px}
 b.button:after{content:"]";padding:0 2px 0 3px}
@@ -198,7 +202,7 @@ table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
 table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
 .admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
 .admonitionblock>table td.icon{text-align:center;width:80px}
-.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon img{max-width:initial}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
@@ -254,13 +258,13 @@ table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 table.tableblock{max-width:100%;border-collapse:separate}
 table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
-table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
-table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
-table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
-table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
-table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
-table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
-table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px 0}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
 table.frame-all{border-width:1px}
 table.frame-sides{border-width:0 1px}
 table.frame-topbot{border-width:1px 0}
@@ -281,10 +285,12 @@ ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
-ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
-ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -301,7 +307,8 @@ ol.lowergreek{list-style-type:lower-greek}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
-.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:first-of-type{padding:.4em .75em 0 .75em;line-height:1;vertical-align:top}
+.colist>table tr>td:first-of-type img{max-width:initial}
 .colist>table tr>td:last-of-type{padding:.25em 0}
 .thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
 .imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
@@ -364,6 +371,7 @@ div.unbreakable{page-break-inside:avoid}
 .yellow{color:#bfbf00}
 .yellow-background{background-color:#fafa00}
 span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
 .admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
 .admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
@@ -417,7 +425,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
 <body class="article">
 <div id="header">
@@ -443,6 +451,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_create_this_application_2">Create this application</a></li>
 <li><a href="#_use_tomcat_as_a_web_engine">Use Tomcat as a web engine</a></li>
 <li><a href="#_use_a_reactive_datastore">Use a reactive datastore</a></li>
+<li><a href="#_create_a_json_web_service">Create a JSON web service</a></li>
+<li><a href="#_use_thymeleaf_to_render_html_views">Use Thymeleaf to render HTML views</a></li>
+<li><a href="#_use_the_webclient_to_stream_json_to_the_browser">Use the WebClient to stream JSON to the browser</a></li>
+<li><a href="#_create_and_configure_a_websockethandler">Create and Configure a WebSocketHandler</a></li>
+<li><a href="#_integration_tests_with_websocketclient">Integration tests with WebSocketClient</a></li>
 </ul>
 </li>
 <li><a href="#_additional_resources">Additional Resources</a></li>
@@ -480,8 +493,8 @@ Each step of this workshop has its companion commit in the git history with a de
 </li>
 <li>
 <p>Spring WebFlux
-<a href="http://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/web.html#web-reactive">reference documentation</a>
-and <a href="http://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/javadoc-api/">javadoc</a></p>
+<a href="http://docs.spring.io/spring-framework/docs/5.0.6.RELEASE/spring-framework-reference/web-reactive.html#spring-webflux">reference documentation</a>
+and <a href="http://docs.spring.io/spring-framework/docs/5.0.6.RELEASE/javadoc-api/">javadoc</a></p>
 </li>
 </ul>
 </div>
@@ -493,9 +506,9 @@ and <a href="http://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/ja
 <div class="sect2">
 <h3 id="_create_this_application"><a class="anchor" href="#_create_this_application"></a>Create this application</h3>
 <div class="paragraph">
-<p>Go to <code><a href="https://start.spring.io" class="bare">https://start.spring.io</a></code> and create a Maven project with Spring Boot 2.0.0.BUILD-SNAPSHOT,
+<p>Go to <code><a href="https://start.spring.io" class="bare">https://start.spring.io</a></code> and create a Maven project with Spring Boot 2.0.2.RELEASE,
 with groupId <code>io.spring.workshop</code> and artifactId <code>stock-quotes</code>. Select the <code>Reactive Web</code>
-and <code>Devtools</code> Boot starters.
+Boot starter.
 Unzip the given file into a directory and import that application into your IDE.</p>
 </div>
 <div class="paragraph">
@@ -528,7 +541,14 @@ public class StockQuotesApplication {
 </div>
 </div>
 <div class="paragraph">
-<p>Launching it from your IDE or with <code>mvn spring-boot:run</code> should start a Netty server on port 8081.</p>
+<p>Launching it from your IDE or with <code>mvn spring-boot:run</code> should start a Netty server on port 8081.
+You should see in the logs something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">INFO 2208 --- [  restartedMain] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port(s): 8081
+INFO 2208 --- [  restartedMain] i.s.w.s.StockQuotesApplication           : Started StockQuotesApplication in 1.905 seconds (JVM running for 3.075)</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -615,10 +635,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.SynchronousSink;
 
 import org.springframework.stereotype.Component;
 
@@ -647,41 +666,35 @@ public class QuoteGenerator {
 
 	public Flux&lt;Quote&gt; fetchQuoteStream(Duration period) {
 
-		// We use here Flux.generate to create quotes, iterating on each stock starting at index 0
-		return Flux.generate(() -&gt; 0,
-				(BiFunction&lt;Integer, SynchronousSink&lt;Quote&gt;, Integer&gt;) (index, sink) -&gt; {
-					Quote updatedQuote = updateQuote(this.prices.get(index));
-					sink.next(updatedQuote);
-					return ++index % this.prices.size();
-				})
-				// We want to emit them with a specific period; to do so, we zip that Flux with a Flux.interval
-				.zipWith(Flux.interval(period)).map(t -&gt; t.getT1())
-				// Because values are generated in batches, we need to set their timestamp after their creation
-				.map(quote -&gt; {
-					quote.setInstant(Instant.now());
-					return quote;
-				})
+		// We want to emit quotes with a specific period;
+		// to do so, we create a Flux.interval
+		return Flux.interval(period)
+				// In case of back-pressure, drop events
+				.onBackpressureDrop()
+				// For each tick, generate a list of quotes
+				.map(this::generateQuotes)
+				// "flatten" that List&lt;Quote&gt; into a Flux&lt;Quote&gt;
+				.flatMapIterable(quotes -&gt; quotes)
 				.log("io.spring.workshop.stockquotes");
 	}
 
-	private Quote updateQuote(Quote quote) {
-		BigDecimal priceChange = quote.getPrice()
-				.multiply(new BigDecimal(0.05 * this.random.nextDouble()), this.mathContext);
-		return new Quote(quote.getTicker(), quote.getPrice().add(priceChange));
+	/*
+	 * Create quotes for all tickers at a single instant.
+	 */
+	private List&lt;Quote&gt; generateQuotes(long interval) {
+		final Instant instant = Instant.now();
+		return prices.stream()
+				.map(baseQuote -&gt; {
+					BigDecimal priceChange = baseQuote.getPrice()
+							.multiply(new BigDecimal(0.05 * this.random.nextDouble()), this.mathContext);
+					Quote result = new Quote(baseQuote.getTicker(), baseQuote.getPrice().add(priceChange));
+					result.setInstant(instant);
+					return result;
+				})
+				.collect(Collectors.toList());
 	}
+
 }</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Because we&#8217;re working with <code>java.time.Instant</code> and Jackson, we should import the dedicated module in our app.</p>
-</div>
-<div class="listingblock">
-<div class="title">stock-quotes/pom.xml</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
-			&lt;groupId&gt;com.fasterxml.jackson.datatype&lt;/groupId&gt;
-			&lt;artifactId&gt;jackson-datatype-jsr310&lt;/artifactId&gt;
-		&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -697,15 +710,17 @@ that takes a ServerRequest and returns a <code>Mono&lt;ServerResponse&gt;</code>
 to a handler function would be a Controller method.</p>
 </div>
 <div class="paragraph">
-<p>But how those incoming requests are routed to the right handler?
-We&#8217;re using a <code>RouterFunction</code>, which is a function that takes a <code>ServerRequest</code>, and returns
+<p>But how those incoming requests are routed to the right handler?</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re using a <code>RouterFunction</code>, which is a function that takes a <code>ServerRequest</code>, and returns
 a <code>Mono&lt;HandlerFunction&gt;</code>. If a request matches a particular route, a handler function is returned;
 otherwise it returns an empty <code>Mono</code>. The <code>RouterFunction</code> has a similar purpose as the <code>@RequestMapping</code>
 annotation in <code>@Controller</code> classes.</p>
 </div>
 <div class="paragraph">
 <p>Take a look at the code samples in
-<a href="http://docs.spring.io/spring-framework/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/web.html#web-reactive-server-functional">the Spring WebFlux.fn reference documentation</a></p>
+<a href="http://docs.spring.io/spring-framework/docs/5.0.6.RELEASE/spring-framework-reference/web.html#web-reactive-server-functional">the Spring WebFlux.fn reference documentation</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -735,6 +750,19 @@ Since <code>QuoteHandler</code> is a component, you can inject it in <code>@Bean
 </table>
 </div>
 <div class="paragraph">
+<p>Your application should now behave like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ curl http://localhost:8081/hello -i
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: text/plain;charset=UTF-8
+
+Hello Spring!%</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Once done, add another endpoint:</p>
 </div>
 <div class="ulist">
@@ -747,6 +775,19 @@ Since <code>QuoteHandler</code> is a component, you can inject it in <code>@Bean
 <code>"/echo"</code> with a "text/plain" body and returns responses with the same content type.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>You can also use this new endpoint with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ curl http://localhost:8081/echo -i -d "WebFlux workshop" -H "Content-Type: text/plain"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: text/plain
+
+WebFlux workshop%</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -762,12 +803,38 @@ as an attribute for reusability.</p>
 with the <code>"application/stream+json"</code> content type. Add the corresponding part in the <code>RouterFunction</code>,
 on the <code>"/quotes"</code> endpoint.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">$ curl http://localhost:8081/quotes -i -H "Accept: application/stream+json"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/stream+json
+
+{"ticker":"CTXS","price":84.0,"instant":1494841666.633000000}
+{"ticker":"DELL","price":67.1,"instant":1494841666.834000000}
+{"ticker":"GOOG","price":869,"instant":1494841667.034000000}
+{"ticker":"MSFT","price":66.5,"instant":1494841667.231000000}
+{"ticker":"ORCL","price":46.13,"instant":1494841667.433000000}
+{"ticker":"RHT","price":86.9,"instant":1494841667.634000000}
+{"ticker":"VMW","price":93.7,"instant":1494841667.833000000}</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>Let&#8217;s now create a variant of that - instead of streaming all values (with an infinite stream), we can
+<p>Let&#8217;s now create a variant of that — instead of streaming all values (with an infinite stream), we can
 now take the last "n" elements of that <code>Flux</code> and return those as a collection of Quotes with
 the content type <code>"application/json"</code>. Note that you should take the requested number of Quotes
 from the request itself, with the query parameter named <code>"size"</code> (or pick <code>10</code> as the default size
 if none was provided).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-bash" data-lang="bash">curl http://localhost:8081/quotes -i -H "Accept: application/json"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/json
+
+[{"ticker":"CTXS","price":85.8,"instant":1494842241.716000000},{"ticker":"DELL","price":64.69,"instant":1494842241.913000000},{"ticker":"GOOG","price":856.5,"instant":1494842242.112000000},{"ticker":"MSFT","price":68.2,"instant":1494842242.317000000},{"ticker":"ORCL","price":47.4,"instant":1494842242.513000000},{"ticker":"RHT","price":85.6,"instant":1494842242.716000000},{"ticker":"VMW","price":96.1,"instant":1494842242.914000000},{"ticker":"CTXS","price":85.5,"instant":1494842243.116000000},{"ticker":"DELL","price":64.88,"instant":1494842243.316000000},{"ticker":"GOOG","price":889,"instant":1494842243.517000000}]%</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -787,6 +854,8 @@ integration test:</p>
 <div class="title">stock-quotes/src/test/java/io/spring/workshop/stockquotes/StockQuotesApplicationTests.java</div>
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-java" data-lang="java">package io.spring.workshop.stockquotes;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -823,7 +892,28 @@ public class StockQuotesApplicationTests {
 				.hasSize(20)
 				// Here we check that all Quotes have a positive price value
 				.consumeWith(allQuotes -&gt;
-						assertThat(allQuotes).allSatisfy(quote -&gt; assertThat(quote.getPrice()).isPositive()));
+						assertThat(allQuotes.getResponseBody())
+								.allSatisfy(quote -&gt; assertThat(quote.getPrice()).isPositive()));
+	}
+
+	@Test
+	public void fetchQuotesAsStream() {
+		List&lt;Quote&gt; result = webTestClient
+				// We then create a GET request to test an endpoint
+				.get().uri("/quotes")
+				// this time, accepting "application/stream+json"
+				.accept(MediaType.APPLICATION_STREAM_JSON)
+				.exchange()
+				// and use the dedicated DSL to test assertions against the response
+				.expectStatus().isOk()
+				.expectHeader().contentType(MediaType.APPLICATION_STREAM_JSON)
+				.returnResult(Quote.class)
+				.getResponseBody()
+				.take(30)
+				.collectList()
+				.block();
+
+		assertThat(result).allSatisfy(quote -&gt; assertThat(quote.getPrice()).isPositive());
 	}
 
 }</code></pre>
@@ -838,52 +928,26 @@ public class StockQuotesApplicationTests {
 <div class="sect2">
 <h3 id="_create_this_application_2"><a class="anchor" href="#_create_this_application_2"></a>Create this application</h3>
 <div class="paragraph">
-<p>Go to <code><a href="https://start.spring.io" class="bare">https://start.spring.io</a></code> and create a Maven project with Spring Boot 2.0.0.BUILD-SNAPSHOT,
+<p>Go to <code><a href="https://start.spring.io" class="bare">https://start.spring.io</a></code> and create a Maven project with Spring Boot 2.0.2.RELEASE,
 with groupId <code>io.spring.workshop</code> and artifactId <code>trading-service</code>. Select the <code>Reactive Web</code>
 , <code>Devtools</code>, <code>Thymeleaf</code> and <code>Reactive Mongo</code> Boot starters.
 Unzip the given file into a directory and import that application into your IDE.</p>
-</div>
-<div class="paragraph">
-<p>You can now add a few dependencies we&#8217;ll need during this workshop.</p>
-</div>
-<div class="listingblock">
-<div class="title">pom.xml</div>
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;de.flapdoodle.embed&lt;/groupId&gt;
-  &lt;artifactId&gt;de.flapdoodle.embed.mongo&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;com.fasterxml.jackson.datatype&lt;/groupId&gt;
-  &lt;artifactId&gt;jackson-datatype-jsr310&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;org.webjars&lt;/groupId&gt;
-  &lt;artifactId&gt;bootstrap&lt;/artifactId&gt;
-  &lt;version&gt;3.3.7&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;org.webjars&lt;/groupId&gt;
-  &lt;artifactId&gt;highcharts&lt;/artifactId&gt;
-  &lt;version&gt;5.0.8&lt;/version&gt;
-&lt;/dependency&gt;</code></pre>
-</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_use_tomcat_as_a_web_engine"><a class="anchor" href="#_use_tomcat_as_a_web_engine"></a>Use Tomcat as a web engine</h3>
 <div class="paragraph">
 <p>By default, <code>spring-boot-starter-webflux</code> transitively brings <code>spring-boot-starter-reactor-netty</code>
-and SPring Boot auto-configures Reactor Netty as a web server. For this application, we&#8217;ll use
+and Spring Boot auto-configures Reactor Netty as a web server. For this application, we&#8217;ll use
 Tomcat as an alternative.</p>
 </div>
 <div class="listingblock">
-<div class="title">pom.xml</div>
+<div class="title">trading-service/pom.xml</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
+<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;
+		&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -897,19 +961,19 @@ Tomcat as an alternative.</p>
 for this workshop, we&#8217;ll use an in-memory instance of MongoDB. So add the following:</p>
 </div>
 <div class="listingblock">
-<div class="title">pom.xml</div>
+<div class="title">trading-service/pom.xml</div>
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">&lt;dependency&gt;
-  &lt;groupId&gt;de.flapdoodle.embed&lt;/groupId&gt;
-  &lt;artifactId&gt;de.flapdoodle.embed.mongo&lt;/artifactId&gt;
-&lt;/dependency&gt;</code></pre>
+<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
+			&lt;groupId&gt;de.flapdoodle.embed&lt;/groupId&gt;
+			&lt;artifactId&gt;de.flapdoodle.embed.mongo&lt;/artifactId&gt;
+		&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>We&#8217;d like to manage <code>TradingUser</code> with our datastore.</p>
 </div>
 <div class="listingblock">
-<div class="title">src/main/java/io/spring/workshop/tradingservice/TradingUser.java</div>
+<div class="title">trading-service/src/main/java/io/spring/workshop/tradingservice/TradingUser.java</div>
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-java" data-lang="java">package io.spring.workshop.tradingservice;
 
@@ -1001,10 +1065,516 @@ to insert <code>TradingUser</code> instances in the datastore.</p>
 </td>
 <td class="content">
 Since the <code>run</code> method returns void, it expects a blocking implementation. This is why you should use the
-<code>blockLast(Duration)</code> operator on the <code>Publisher</code> returned by the repository when inserting data.
+<code>blockLast(Duration)</code> operator on the <code>Flux</code> returned by the repository when inserting data.
+You can also <code>then().block(Duration)</code> to turn that <code>Flux</code> into a <code>Mono&lt;Void&gt;</code> that waits for completion.
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_a_json_web_service"><a class="anchor" href="#_create_a_json_web_service"></a>Create a JSON web service</h3>
+<div class="paragraph">
+<p>We&#8217;re now going to expose <code>TradingUser</code> through a Controller.
+First, create a <code>UserController</code> annotated with <code>@RestController</code>.
+Then add two new Controller methods in order to handle:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>GET requests to  <code>"/users"</code>, returning all <code>TradingUser</code> instances, serializing them with content-type <code>"application/json"</code></p>
+</li>
+<li>
+<p>GET requests to  <code>"/users/{username}"</code>, returning a single <code>TradingUser</code> instance, serializing it with content-type <code>"application/json"</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can now validate your implementation with the following test:</p>
+</div>
+<div class="listingblock">
+<div class="title">trading-service/src/test/java/io/spring/workshop/tradingservice/UserControllerTests.java</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">package io.spring.workshop.tradingservice;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.BDDMockito;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+@RunWith(SpringRunner.class)
+@WebFluxTest(UserController.class)
+public class UserControllerTests {
+
+  @Autowired
+  private WebTestClient webTestClient;
+
+  @MockBean
+  private TradingUserRepository repository;
+
+  @Test
+  public void listUsers() {
+    TradingUser juergen = new TradingUser("1", "jhoeller", "Juergen Hoeller");
+    TradingUser andy = new TradingUser("2", "wilkinsona", "Andy Wilkinson");
+
+    BDDMockito.given(this.repository.findAll())
+        .willReturn(Flux.just(juergen, andy));
+
+    this.webTestClient.get().uri("/users").accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectBodyList(TradingUser.class)
+        .hasSize(2)
+        .contains(juergen, andy);
+
+  }
+
+  @Test
+  public void showUser() {
+    TradingUser juergen = new TradingUser("1", "jhoeller", "Juergen Hoeller");
+
+    BDDMockito.given(this.repository.findByUserName("jhoeller"))
+        .willReturn(Mono.just(juergen));
+
+    this.webTestClient.get().uri("/users/jhoeller").accept(MediaType.APPLICATION_JSON)
+        .exchange()
+        .expectBody(TradingUser.class)
+        .isEqualTo(juergen);
+  }
+
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_use_thymeleaf_to_render_html_views"><a class="anchor" href="#_use_thymeleaf_to_render_html_views"></a>Use Thymeleaf to render HTML views</h3>
+<div class="paragraph">
+<p>We already added the Thymeleaf Boot starter when we created our trading application.</p>
+</div>
+<div class="paragraph">
+<p>First, let&#8217;s add a couple of WebJar dependencies to get static resources for our application:</p>
+</div>
+<div class="listingblock">
+<div class="title">trading-service/pom.xml</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-xml" data-lang="xml">		&lt;dependency&gt;
+			&lt;groupId&gt;org.webjars&lt;/groupId&gt;
+			&lt;artifactId&gt;bootstrap&lt;/artifactId&gt;
+			&lt;version&gt;3.3.7&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.webjars&lt;/groupId&gt;
+			&lt;artifactId&gt;highcharts&lt;/artifactId&gt;
+			&lt;version&gt;5.0.8&lt;/version&gt;
+		&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now create HTML templates in our <code>src/main/resources/templates</code> folder and map them using controllers.</p>
+</div>
+<div class="listingblock">
+<div class="title">trading-service/src/main/resources/templates/index.html</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-html" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;
+    &lt;meta name="description" content="Spring WebFlux Workshop"/&gt;
+    &lt;meta name="author" content="Violeta Georgieva and Brian Clozel"/&gt;
+    &lt;title&gt;Spring Trading application&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/&gt;
+    &lt;link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;nav class="navbar navbar-default"&gt;
+    &lt;div class="container-fluid"&gt;
+        &lt;div class="navbar-header"&gt;
+            &lt;a class="navbar-brand" href="/"&gt;Spring Trading application&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div id="navbar" class="navbar-collapse collapse"&gt;
+            &lt;ul class="nav navbar-nav"&gt;
+                &lt;li class="active"&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/quotes"&gt;Quotes&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/websocket"&gt;Websocket&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;
+&lt;div class="container wrapper"&gt;
+    &lt;h2&gt;Trading users&lt;/h2&gt;
+    &lt;table class="table table-striped"&gt;
+        &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;#&lt;/th&gt;
+            &lt;th&gt;User name&lt;/th&gt;
+            &lt;th&gt;Full name&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+        &lt;tr th:each="user: ${users}"&gt;
+            &lt;th scope="row" th:text="${user.id}"&gt;42&lt;/th&gt;
+            &lt;td th:text="${user.userName}"&gt;janedoe&lt;/td&gt;
+            &lt;td th:text="${user.fullName}"&gt;Jane Doe&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see in that template, we loop over the <code>"users"</code> attribute and write a row in our HTML table for each.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s display those users in our application:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <code>HomeController</code> Controller</p>
+</li>
+<li>
+<p>Add a Controller method that handles GET requests to <code>"/"</code></p>
+</li>
+<li>
+<p>Inject the Spring <code>Model</code> on that method and add a <code>"users"</code> attribute to it</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Spring WebFlux will resolve automatically <code>Publisher</code> instances before rendering the view,
+there&#8217;s no need to involve blocking code at all!
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_use_the_webclient_to_stream_json_to_the_browser"><a class="anchor" href="#_use_the_webclient_to_stream_json_to_the_browser"></a>Use the WebClient to stream JSON to the browser</h3>
+<div class="paragraph">
+<p>In this section, we&#8217;ll call our remote <code>stock-quotes</code> service to get Quotes from it, so we first need to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>copy over the <code>Quote</code> class to this application</p>
+</li>
+<li>
+<p>add the following template file to your application:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">trading-service/src/main/resources/templates/quotes.html</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-html" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;
+    &lt;meta name="description" content="Spring WebFlux Workshop"/&gt;
+    &lt;meta name="author" content="Violeta Georgieva and Brian Clozel"/&gt;
+    &lt;title&gt;Spring Trading application&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/&gt;
+    &lt;link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/&gt;
+    &lt;link rel="stylesheet" href="/webjars/highcharts/5.0.8/css/highcharts.css"/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;nav class="navbar navbar-default"&gt;
+    &lt;div class="container-fluid"&gt;
+        &lt;div class="navbar-header"&gt;
+            &lt;a class="navbar-brand" href="/"&gt;Spring Trading application&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div id="navbar" class="navbar-collapse collapse"&gt;
+            &lt;ul class="nav navbar-nav"&gt;
+                &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="active"&gt;&lt;a href="/quotes"&gt;Quotes&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/websocket"&gt;Websocket&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;
+&lt;div class="container wrapper"&gt;
+    &lt;div id="chart" style="height: 400px; min-width: 310px"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/webjars/highcharts/5.0.8/highcharts.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+
+    // Setting up the chart
+    var chart = new Highcharts.Chart('chart', {
+        title: {
+            text: 'My Stock Portfolio'
+        },
+        yAxis: {
+            title: {
+                text: 'Stock Price'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        series: [{
+            name: 'CTXS',
+            data: []
+        }, {
+            name: 'MSFT',
+            data: []
+        }, {
+            name: 'ORCL',
+            data: []
+        }, {
+            name: 'RHT',
+            data: []
+        }, {
+            name: 'VMW',
+            data: []
+        }, {
+            name: 'DELL',
+            data: []
+        }]
+    });
+
+    // This function adds the given data point to the chart
+    var appendStockData = function (quote) {
+        chart.series
+            .filter(function (serie) {
+                return serie.name === quote.ticker
+            })
+            .forEach(function (serie) {
+                var shift = serie.data.length &gt; 40;
+                serie.addPoint([Date.parse(quote.instant), quote.price], true, shift);
+            });
+    };
+
+    // The browser connects to the server and receives quotes using ServerSentEvents
+    // those quotes are appended to the chart as they're received
+    var stockEventSource = new EventSource("/quotes/feed");
+    stockEventSource.onmessage = function (e) {
+        appendStockData(JSON.parse(e.data));
+    };
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see in this template file, loading that HTML page will cause the browser to send a request
+the server for <code>Quotes</code> using the Server Sent Event transport.</p>
+</div>
+<div class="paragraph">
+<p>Now create a <code>QuotesController</code> annotated with <code>@Controller</code> and add two methods.
+One that renders the <code>quotes.html</code> template for incoming <code>"GET /quotes"</code> requests.
+The other should response to <code>"GET /quotes/feed"</code> requests with the <code>"text/event-stream"</code> content-type,
+with a <code>Flux&lt;Quote&gt;</code> as the response body. This data is already server by the <code>stock-quotes</code> application
+, so you can use a <code>WebClient</code> to request the remote web service to retrieve that <code>Flux</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You should avoid making a request to the <code>stock-quotes</code> service for every browser connecting to
+that page — for that, you can use the <code>Flux.share()</code> operator.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_and_configure_a_websockethandler"><a class="anchor" href="#_create_and_configure_a_websockethandler"></a>Create and Configure a WebSocketHandler</h3>
+<div class="paragraph">
+<p>WebFlux includes functional reactive WebSocket client and server support.</p>
+</div>
+<div class="paragraph">
+<p>On the server side there are two main components: <code>WebSocketHandlerAdapter</code> will handle the incoming
+requests by delegating to the configured <code>WebSocketService</code> and <code>WebSocketHandler</code> will be responsible
+to handle WebSocket session.</p>
+</div>
+<div class="paragraph">
+<p>Take a look at the code samples in
+<a href="http://docs.spring.io/spring-framework/docs/5.0.6.RELEASE/spring-framework-reference/web.html#web-reactive-websocket-support">Reactive WebSocket Support documentation</a></p>
+</div>
+<div class="paragraph">
+<p>First, create an <code>EchoWebSocketHandler</code> class; it has to implement <code>WebSocketHandler</code>.
+Now implement <code>handle(WebSocketSession session)</code> method. The handler echoes the incoming messages with a delay of 1s.</p>
+</div>
+<div class="paragraph">
+<p>To route requests to that handler, you need to map the above WebSocket handler to a specific URL: here, <code>"/websocket/echo"</code>.
+Create a <code>WebSocketRouter</code> configuration class (i.e. annotated with <code>@Configuration</code>) that creates a bean of type <code>HandlerMapping</code>.
+Create one additional bean of type <code>WebSocketHandlerAdapter</code> which will delegate the processing of
+the incoming request to the default <code>WebSocketService</code> which is <code>HandshakeWebSocketService</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now create a <code>WebSocketController</code> annotated with @Controller and add a method that renders the
+<code>websocket.html</code> template for incoming <code>"GET /websocket"</code> requests.</p>
+</div>
+<div class="paragraph">
+<p>Add the following template file to your application:</p>
+</div>
+<div class="listingblock">
+<div class="title">trading-service/src/main/resources/templates/websocket.html</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-html" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;
+    &lt;meta name="description" content="Spring WebFlux Workshop"/&gt;
+    &lt;meta name="author" content="Violeta Georgieva and Brian Clozel"/&gt;
+    &lt;title&gt;Spring Trading application&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/&gt;
+    &lt;link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;nav class="navbar navbar-default"&gt;
+    &lt;div class="container-fluid"&gt;
+        &lt;div class="navbar-header"&gt;
+            &lt;a class="navbar-brand" href="/"&gt;Spring Trading application&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div id="navbar" class="navbar-collapse collapse"&gt;
+            &lt;ul class="nav navbar-nav"&gt;
+                &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/quotes"&gt;Quotes&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="active"&gt;&lt;a href="/websocket"&gt;Websocket&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;
+&lt;div class="container wrapper"&gt;
+    &lt;h2&gt;Websocket Echo&lt;/h2&gt;
+    &lt;form class="form-inline"&gt;
+        &lt;div class="form-group"&gt;
+            &lt;input class="form-control" type="text" id="input" value="type something"&gt;
+            &lt;input class="btn btn-default" type="submit" id="button" value="Send"/&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+    &lt;div id="output"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+    $(document).ready(function () {
+        if (!("WebSocket" in window)) WebSocket = MozWebSocket;
+        var socket = new WebSocket("ws://localhost:8080/websocket/echo");
+
+        socket.onopen = function (event) {
+            var newMessage = document.createElement('p');
+            newMessage.textContent = "-- CONNECTED";
+            document.getElementById('output').appendChild(newMessage);
+
+            socket.onmessage = function (e) {
+                var newMessage = document.createElement('p');
+                newMessage.textContent = "&lt;&lt; SERVER: " + e.data;
+                document.getElementById('output').appendChild(newMessage);
+            }
+
+            $("#button").click(function (e) {
+                e.preventDefault();
+                var message = $("#input").val();
+                socket.send(message);
+                var newMessage = document.createElement('p');
+                newMessage.textContent = "&gt;&gt; CLIENT: " + message;
+                document.getElementById('output').appendChild(newMessage);
+            });
+        }
+    });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_integration_tests_with_websocketclient"><a class="anchor" href="#_integration_tests_with_websocketclient"></a>Integration tests with WebSocketClient</h3>
+<div class="paragraph">
+<p><code>WebSocketClient</code> included in Spring WebFlux can be used to test your WebSocket endpoints.</p>
+</div>
+<div class="paragraph">
+<p>You can check that your WebSocket endpoint, created in the previous section, is working properly with the
+following integration test:</p>
+</div>
+<div class="listingblock">
+<div class="title">trading-service/src/test/java/io/spring/workshop/tradingservice/websocket/EchoWebSocketHandlerTests.java</div>
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">package io.spring.workshop.tradingservice.websocket;
+
+import static org.junit.Assert.assertEquals;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.Duration;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.reactive.socket.WebSocketMessage;
+import org.springframework.web.reactive.socket.client.StandardWebSocketClient;
+import org.springframework.web.reactive.socket.client.WebSocketClient;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.ReplayProcessor;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class EchoWebSocketHandlerTests {
+
+	@LocalServerPort
+	private String port;
+
+	@Test
+	public void echo() throws Exception {
+		int count = 4;
+		Flux&lt;String&gt; input = Flux.range(1, count).map(index -&gt; "msg-" + index);
+		ReplayProcessor&lt;Object&gt; output = ReplayProcessor.create(count);
+
+		WebSocketClient client = new StandardWebSocketClient();
+		client.execute(getUrl("/websocket/echo"),
+				session -&gt; session
+						.send(input.map(session::textMessage))
+						.thenMany(session.receive().take(count).map(WebSocketMessage::getPayloadAsText))
+						.subscribeWith(output)
+						.then())
+				.block(Duration.ofMillis(5000));
+
+		assertEquals(input.collectList().block(Duration.ofMillis(5000)), output.collectList().block(Duration.ofMillis(5000)));
+	}
+
+	protected URI getUrl(String path) throws URISyntaxException {
+		return new URI("ws://localhost:" + this.port + path);
+	}
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1030,7 +1600,7 @@ Since the <code>run</code> method returns void, it expects a blocking implementa
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-09 23:34:12 CEST
+Last updated 2018-05-28 14:09:17 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

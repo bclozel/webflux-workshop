@@ -1,0 +1,378 @@
+= Spring WebFlux Workshop
+Brian Clozel, Violeta Georgieva - Pivotal
+:sectanchors: true
+:source-highlighter: prettify
+:icons: font
+:toc: 
+:spring-boot-version: 2.0.2.RELEASE
+:spring-framework-version: 5.0.6.RELEASE
+:spring-framework-doc-base: http://docs.spring.io/spring-framework/docs/{spring-framework-version}
+
+This repository hosts a complete workshop on Spring Boot + Spring WebFlux.
+Just follow this README and create your first WebFlux applications!
+Each step of this workshop has its companion commit in the git history with a detailed commit message.
+
+We'll create two applications:
+
+* `stock-quotes` is a functional WebFlux app which streams stock quotes
+* `trading-service` is an annotation-based WebFlux app using a datastore, HTML views, and several browser-related technologies
+
+Reference documentations can be useful while working on those apps:
+
+* http://projectreactor.io/docs[Reactor Core documentation]
+* Spring WebFlux 
+{spring-framework-doc-base}/spring-framework-reference/web-reactive.html#spring-webflux[reference documentation]
+and {spring-framework-doc-base}/javadoc-api/[javadoc]
+
+
+== Stock Quotes application
+
+=== Create this application
+
+Go to `https://start.spring.io` and create a Maven project with Spring Boot {spring-boot-version},
+with groupId `io.spring.workshop` and artifactId `stock-quotes`. Select the `Reactive Web`
+Boot starter.
+Unzip the given file into a directory and import that application into your IDE.
+
+If generated right, you should have a main `Application` class that looks like this:
+
+[source,java]
+.stock-quotes/src/main/java/io/spring/workshop/stockquotes/StockQuotesApplication.java
+----
+include::../stock-quotes/src/main/java/io/spring/workshop/stockquotes/StockQuotesApplication.java[]
+----
+
+Edit your `application.properties` file to start the server on a specific port.
+
+[source,properties]
+.stock-quotes/src/main/resources/application.properties
+----
+include::../stock-quotes/src/main/resources/application.properties[]
+----
+
+Launching it from your IDE or with `mvn spring-boot:run` should start a Netty server on port 8081.
+You should see in the logs something like:
+
+[source,bash]
+----
+INFO 2208 --- [  restartedMain] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port(s): 8081
+INFO 2208 --- [  restartedMain] i.s.w.s.StockQuotesApplication           : Started StockQuotesApplication in 1.905 seconds (JVM running for 3.075)
+----
+
+=== Create a Quote Generator
+
+To simulate real stock values, we'll create a generator that emits such values at a specific interval.
+Copy the following classes to your project.
+
+[source,java]
+.stock-quotes/src/main/java/io/spring/workshop/stockquotes/Quote.java
+----
+include::../stock-quotes/src/main/java/io/spring/workshop/stockquotes/Quote.java[]
+----
+
+[source,java]
+.stock-quotes/src/main/java/io/spring/workshop/stockquotes/QuoteGenerator.java
+----
+include::../stock-quotes/src/main/java/io/spring/workshop/stockquotes/QuoteGenerator.java[]
+----
+
+
+=== Functional web applications with "WebFlux.fn"
+
+Spring WebFlux comes in two flavors of web applications: annotation based and functional.
+For this first application, we'll use the functional variant.
+
+Incoming HTTP requests are handled by a `HandlerFunction`, which is essentially a function
+that takes a ServerRequest and returns a `Mono<ServerResponse>`. The annotation counterpart
+to a handler function would be a Controller method.
+
+But how those incoming requests are routed to the right handler?
+
+We're using a `RouterFunction`, which is a function that takes a `ServerRequest`, and returns
+a `Mono<HandlerFunction>`. If a request matches a particular route, a handler function is returned;
+otherwise it returns an empty `Mono`. The `RouterFunction` has a similar purpose as the `@RequestMapping`
+annotation in `@Controller` classes.
+
+Take a look at the code samples in 
+{spring-framework-doc-base}/spring-framework-reference/web.html#web-reactive-server-functional[the Spring WebFlux.fn reference documentation]
+
+=== Create your first HandlerFunction + RouterFunction
+
+First, create a `QuoteHandler` class and mark is as a `@Component`;this class will have all our handler functions as methods.
+Now create a `hello` handler function in that class that always returns "text/plain" HTTP responses with "Hello Spring!" as body.
+
+To route requests to that handler, you need to expose a `RouterFunction` to Spring Boot.
+Create a `QuoteRouter` configuration class (i.e. annotated with `@Configuration`) 
+that creates a bean of type `RouterFunction<ServerResponse>`.
+
+Modify that class so that GET requests to `"/hello"` are routed to the handler you just implemented.
+
+TIP: Since `QuoteHandler` is a component, you can inject it in `@Bean` methods as a method parameter.
+
+Your application should now behave like this:
+[source,bash]
+----
+$ curl http://localhost:8081/hello -i
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: text/plain;charset=UTF-8
+
+Hello Spring!%
+----
+
+Once done, add another endpoint:
+
+* with a HandlerFunction `echo` that echoes the request body in the response, as "text/plain"
+* and an additional route in our existing `RouterFunction` that accepts POST requests on
+`"/echo"` with a "text/plain" body and returns responses with the same content type.
+
+You can also use this new endpoint with:
+
+[source,bash]
+----
+$ curl http://localhost:8081/echo -i -d "WebFlux workshop" -H "Content-Type: text/plain"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: text/plain
+
+WebFlux workshop%
+----
+
+
+=== Expose the Flux<Quotes> as a web service
+
+First, let's inject our `QuoteGenerator` instance in our `QuoteHandler`, instantiate
+a `Flux<Quote>` from it that emits a `Quote` every 200 msec and can be **shared** between
+multiple subscribers (look at the `Flux` operators for that). This instance should be kept
+as an attribute for reusability.
+
+Now create a `streamQuotes` handler that streams those generated quotes 
+with the `"application/stream+json"` content type. Add the corresponding part in the `RouterFunction`,
+on the `"/quotes"` endpoint.
+
+[source,bash]
+----
+$ curl http://localhost:8081/quotes -i -H "Accept: application/stream+json"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/stream+json
+
+{"ticker":"CTXS","price":84.0,"instant":1494841666.633000000}
+{"ticker":"DELL","price":67.1,"instant":1494841666.834000000}
+{"ticker":"GOOG","price":869,"instant":1494841667.034000000}
+{"ticker":"MSFT","price":66.5,"instant":1494841667.231000000}
+{"ticker":"ORCL","price":46.13,"instant":1494841667.433000000}
+{"ticker":"RHT","price":86.9,"instant":1494841667.634000000}
+{"ticker":"VMW","price":93.7,"instant":1494841667.833000000}
+----
+
+
+Let's now create a variant of that — instead of streaming all values (with an infinite stream), we can
+now take the last "n" elements of that `Flux` and return those as a collection of Quotes with
+the content type `"application/json"`. Note that you should take the requested number of Quotes
+from the request itself, with the query parameter named `"size"` (or pick `10` as the default size
+if none was provided).
+
+[source,bash]
+----
+curl http://localhost:8081/quotes -i -H "Accept: application/json"
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/json
+
+[{"ticker":"CTXS","price":85.8,"instant":1494842241.716000000},{"ticker":"DELL","price":64.69,"instant":1494842241.913000000},{"ticker":"GOOG","price":856.5,"instant":1494842242.112000000},{"ticker":"MSFT","price":68.2,"instant":1494842242.317000000},{"ticker":"ORCL","price":47.4,"instant":1494842242.513000000},{"ticker":"RHT","price":85.6,"instant":1494842242.716000000},{"ticker":"VMW","price":96.1,"instant":1494842242.914000000},{"ticker":"CTXS","price":85.5,"instant":1494842243.116000000},{"ticker":"DELL","price":64.88,"instant":1494842243.316000000},{"ticker":"GOOG","price":889,"instant":1494842243.517000000}]%
+----
+
+
+=== Integration tests with WebTestClient
+
+Spring WebFlux (actually the `spring-test` module) includes a `WebTestClient`
+that can be used to test WebFlux server endpoints with or without a running server.
+Tests without a running server are comparable to MockMvc from Spring MVC where mock request 
+and response are used instead of connecting over the network using a socket.
+The WebTestClient however can also perform tests against a running server.
+
+You can check that your last endpoint is working properly with the following
+integration test:
+
+[source,java]
+.stock-quotes/src/test/java/io/spring/workshop/stockquotes/StockQuotesApplicationTests.java
+----
+include::../stock-quotes/src/test/java/io/spring/workshop/stockquotes/StockQuotesApplicationTests.java[]
+----
+
+== Trading Service application
+
+=== Create this application
+
+Go to `https://start.spring.io` and create a Maven project with Spring Boot {spring-boot-version},
+with groupId `io.spring.workshop` and artifactId `trading-service`. Select the `Reactive Web`
+, `Devtools`, `Thymeleaf` and `Reactive Mongo` Boot starters.
+Unzip the given file into a directory and import that application into your IDE.
+
+=== Use Tomcat as a web engine
+
+By default, `spring-boot-starter-webflux` transitively brings `spring-boot-starter-reactor-netty`
+and Spring Boot auto-configures Reactor Netty as a web server. For this application, we'll use
+Tomcat as an alternative.
+
+[source,xml]
+.trading-service/pom.xml
+----
+include::../trading-service/pom.xml[tags=tomcat]
+----
+
+Note that Spring Boot supports as well Undertow and Jetty.
+
+=== Use a reactive datastore
+
+In this application, we'll use a MongoDB datastore with its reactive driver;
+for this workshop, we'll use an in-memory instance of MongoDB. So add the following:
+
+[source,xml]
+.trading-service/pom.xml
+----
+include::../trading-service/pom.xml[tags=inMemMongo]
+----
+
+We'd like to manage `TradingUser` with our datastore.
+
+[source,java]
+.trading-service/src/main/java/io/spring/workshop/tradingservice/TradingUser.java
+----
+include::../trading-service/src/main/java/io/spring/workshop/tradingservice/TradingUser.java[]
+----
+
+Now create a `TradingUserRepository` interface that extends `ReactiveMongoRepository`.
+Add a `findByUserName(String userName)` method that returns a single `TradingUser` in a reactive fashion.
+
+We'd like to insert users in our datastore when the application starts up. For that, create a `UsersCommandLineRunner`
+component that implements Spring Boot's `CommandLineRunner`. In the `run` method, use the reactive repository
+to insert `TradingUser` instances in the datastore.
+
+NOTE: Since the `run` method returns void, it expects a blocking implementation. This is why you should use the
+`blockLast(Duration)` operator on the `Flux` returned by the repository when inserting data.
+You can also `then().block(Duration)` to turn that `Flux` into a `Mono<Void>` that waits for completion.
+
+=== Create a JSON web service
+
+We're now going to expose `TradingUser` through a Controller.
+First, create a `UserController` annotated with `@RestController`.
+Then add two new Controller methods in order to handle:
+
+* GET requests to  `"/users"`, returning all `TradingUser` instances, serializing them with content-type `"application/json"`
+* GET requests to  `"/users/{username}"`, returning a single `TradingUser` instance, serializing it with content-type `"application/json"`
+
+You can now validate your implementation with the following test:
+
+[source,java]
+.trading-service/src/test/java/io/spring/workshop/tradingservice/UserControllerTests.java
+----
+include::../trading-service/src/test/java/io/spring/workshop/tradingservice/UserControllerTests.java[]
+----
+
+=== Use Thymeleaf to render HTML views
+
+We already added the Thymeleaf Boot starter when we created our trading application.
+
+First, let's add a couple of WebJar dependencies to get static resources for our application:
+
+[source,xml]
+.trading-service/pom.xml
+----
+include::../trading-service/pom.xml[tags=webjars]
+----
+
+We can now create HTML templates in our `src/main/resources/templates` folder and map them using controllers.
+
+[source,html]
+.trading-service/src/main/resources/templates/index.html
+----
+include::../trading-service/src/main/resources/templates/index.html[]
+----
+
+As you can see in that template, we loop over the `"users"` attribute and write a row in our HTML table for each.
+
+Let's display those users in our application:
+
+* Create a `HomeController` Controller
+* Add a Controller method that handles GET requests to `"/"`
+* Inject the Spring `Model` on that method and add a `"users"` attribute to it
+
+NOTE: Spring WebFlux will resolve automatically `Publisher` instances before rendering the view,
+there's no need to involve blocking code at all!
+
+=== Use the WebClient to stream JSON to the browser
+
+In this section, we'll call our remote `stock-quotes` service to get Quotes from it, so we first need to:
+
+* copy over the `Quote` class to this application
+* add the following template file to your application:
+
+[source,html]
+.trading-service/src/main/resources/templates/quotes.html
+----
+include::../trading-service/src/main/resources/templates/quotes.html[]
+----
+
+As you can see in this template file, loading that HTML page will cause the browser to send a request
+the server for `Quotes` using the Server Sent Event transport.
+
+Now create a `QuotesController` annotated with `@Controller` and add two methods.
+One that renders the `quotes.html` template for incoming `"GET /quotes"` requests.
+The other should response to `"GET /quotes/feed"` requests with the `"text/event-stream"` content-type,
+with a `Flux<Quote>` as the response body. This data is already server by the `stock-quotes` application
+, so you can use a `WebClient` to request the remote web service to retrieve that `Flux`.
+
+TIP: You should avoid making a request to the `stock-quotes` service for every browser connecting to
+that page — for that, you can use the `Flux.share()` operator. 
+
+=== Create and Configure a WebSocketHandler
+
+WebFlux includes functional reactive WebSocket client and server support.
+
+On the server side there are two main components: `WebSocketHandlerAdapter` will handle the incoming
+requests by delegating to the configured `WebSocketService` and `WebSocketHandler` will be responsible
+to handle WebSocket session.
+
+Take a look at the code samples in 
+{spring-framework-doc-base}/spring-framework-reference/web.html#web-reactive-websocket-support[Reactive WebSocket Support documentation]
+
+First, create an `EchoWebSocketHandler` class; it has to implement `WebSocketHandler`.
+Now implement `handle(WebSocketSession session)` method. The handler echoes the incoming messages with a delay of 1s.
+
+To route requests to that handler, you need to map the above WebSocket handler to a specific URL: here, `"/websocket/echo"`.
+Create a `WebSocketRouter` configuration class (i.e. annotated with `@Configuration`) that creates a bean of type `HandlerMapping`.
+Create one additional bean of type `WebSocketHandlerAdapter` which will delegate the processing of
+the incoming request to the default `WebSocketService` which is `HandshakeWebSocketService`.
+
+Now create a `WebSocketController` annotated with @Controller and add a method that renders the
+`websocket.html` template for incoming `"GET /websocket"` requests.
+
+Add the following template file to your application:
+
+[source,html]
+.trading-service/src/main/resources/templates/websocket.html
+----
+include::../trading-service/src/main/resources/templates/websocket.html[]
+----
+
+=== Integration tests with WebSocketClient
+
+`WebSocketClient` included in Spring WebFlux can be used to test your WebSocket endpoints.
+
+You can check that your WebSocket endpoint, created in the previous section, is working properly with the 
+following integration test:
+
+[source,java]
+.trading-service/src/test/java/io/spring/workshop/tradingservice/websocket/EchoWebSocketHandlerTests.java
+----
+include::../trading-service/src/test/java/io/spring/workshop/tradingservice/websocket/EchoWebSocketHandlerTests.java[]
+----
+
+== Additional Resources
+
+Talks on Spring Reactive:
+
+* https://www.youtube.com/watch?v=rdgJ8fOxJhc[Reactive Web Applications with Spring 5 (Rossen Stoyanchev)]
+* https://www.youtube.com/watch?v=Cj4foJzPF80[Developing Reactive applications with Reactive Streams and Java 8 (B.Clozel, S.Deleuze)]
