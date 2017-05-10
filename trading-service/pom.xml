@@ -37,6 +37,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+		<!-- tag::tomcat[] -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+		<!-- end::tomcat[] -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
