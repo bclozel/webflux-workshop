@@ -49,7 +49,18 @@
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 		</dependency>
 		<!-- end::inMemMongo[] -->
-
+		<!-- tag::webjars[] -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>highcharts</artifactId>
+			<version>5.0.8</version>
+		</dependency>
+		<!-- end::webjars[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

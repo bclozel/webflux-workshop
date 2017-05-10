@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Spring WebFlux Workshop"/>
+    <meta name="author" content="Violeta Georgieva and Brian Clozel"/>
+    <title>Spring Trading application</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Spring Trading application</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/quotes">Quotes</a></li>
+                <li><a href="/websocket">Websocket</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container wrapper">
+    <h2>Trading users</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>User name</th>
+            <th>Full name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <th scope="row" th:text="${user.id}">42</th>
+            <td th:text="${user.userName}">janedoe</td>
+            <td th:text="${user.fullName}">Jane Doe</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
