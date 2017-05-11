@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Spring WebFlux Workshop"/>
+    <meta name="author" content="Violeta Georgieva and Brian Clozel"/>
+    <title>Spring Trading application</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/highcharts/5.0.8/css/highcharts.css"/>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Spring Trading application</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/quotes">Quotes</a></li>
+                <li><a href="/websocket">Websocket</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container wrapper">
+    <div id="chart" style="height: 400px; min-width: 310px"></div>
+</div>
+<script type="text/javascript" src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/highcharts/5.0.8/highcharts.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    // Setting up the chart
+    var chart = new Highcharts.Chart('chart', {
+        title: {
+            text: 'My Stock Portfolio'
+        },
+        yAxis: {
+            title: {
+                text: 'Stock Price'
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        series: [{
+            name: 'CTXS',
+            data: []
+        }, {
+            name: 'MSFT',
+            data: []
+        }, {
+            name: 'ORCL',
+            data: []
+        }, {
+            name: 'RHT',
+            data: []
+        }, {
+            name: 'VMW',
+            data: []
+        }, {
+            name: 'DELL',
+            data: []
+        }]
+    });
+
+    // This function adds the given data point to the chart
+    var appendStockData = function (quote) {
+        chart.series
+            .filter(function (serie) {
+                return serie.name === quote.ticker
+            })
+            .forEach(function (serie) {
+                var shift = serie.data.length > 40;
+                serie.addPoint([Date.parse(quote.instant), quote.price], true, shift);
+            });
+    };
+
+    // The browser connects to the server and receives quotes using ServerSentEvents
+    // those quotes are appended to the chart as they're received
+    var stockEventSource = new EventSource("/quotes/feed");
+    stockEventSource.onmessage = function (e) {
+        appendStockData(JSON.parse(e.data));
+    };
+</script>
+</body>
+</html>
