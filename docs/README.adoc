@@ -98,7 +98,7 @@ Take a look at the code samples in
 
 === Create your first HandlerFunction + RouterFunction
 
-First, create a `QuoteHandler` class and mark is as a `@Component`;this class will have all our handler functions as methods.
+First, create a `QuoteHandler` class and mark it as a `@Component`;this class will have all our handler functions as methods.
 Now create a `hello` handler function in that class that always returns "text/plain" HTTP responses with "Hello Spring!" as body.
 
 To route requests to that handler, you need to expose a `RouterFunction` to Spring Boot.
